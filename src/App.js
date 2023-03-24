@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import oops from './oops';
 import { CircleLoader } from 'react-spinners';
+import IntractAttribution from "@intract/attribution";
+import { trackCustomWallet } from "@intract/attribution";
 
 
 
@@ -13,6 +15,12 @@ function App() {
   const [text, setText] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    IntractAttribution("641d6158f80e98ca5c736c26", {
+      configAllowCookie: true
+    });
+  }, []);
 
 
   function handleInputChange(event) {
@@ -39,20 +47,16 @@ function App() {
     const data = await response.json();
     console.log(data);
 
-    // setTimeout(() => {
-    //   setLoading(true);
-    // }, 5000);
+
+    trackCustomWallet(text);
 
     setLoading(false);
 
     setSubmitted(true);
 
-    // navigate('/oops');
-
-    // history.push('/oops');
-
-
   }
+
+
 
   return (
     <div className="App">
